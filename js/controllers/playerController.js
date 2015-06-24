@@ -1,36 +1,43 @@
 app.controller('playerController', ['$scope', function($scope) {
   $scope.players = [
     {
-      name: 'Rob',
-      score1: 0,
-      score2: 0,
-      score3: 0,
-      score: 0,
-      plusOne: function() {
-        console.log(this.score1);
-        this.score1 += 1;
-      }
+      name: 'Rob'
     },
     {
-      name: 'Ben',
-      score1: 0,
-      score2: 0,
-      score3: 0,
+      name: 'Ben'
     },
     {
-      name: 'Will',
-      score1: 0,
-      score2: 0,
-      score3: 0,
+      name: 'Will'
     }
   ];
 
   $scope.players.forEach(function(player) {
+    player.score1 = 0;
+    player.score2 = 0;
+    player.score3 = 0;
+    player.score = 0;
+
     player.plusOne = function() {
-      this.score1 += 1;
+      var stage = "score" + $scope.stage;
+      if (this[stage] >=3 ) $scope.stage += 1;
+       else this[stage] += 1;
     };
     player.minusOne = function() {
-      if (this.score1 > 0) this.score1 -= 1;
+      var stage = "score" + $scope.stage;
+      if (this[stage] > 0) this[stage] -= 1;
+        //else if ($scope.stage > 1)  $scope.stage -= 1;
     }
-  })
+  });
+
+    $scope.stage = 1;
+
+    $scope.nextStage = function() {
+      if ($scope.stage < 4) $scope.stage += 1;
+    }
+
+    $scope.nextStage = function() {
+      if ($scope.stage > 1) $scope.stage -= 1;
+    }
+
+
 }]);

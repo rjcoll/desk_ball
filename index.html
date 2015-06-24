@@ -37,6 +37,7 @@
       <div class="container">
         <h1>Deskball Scoresheet</h1>
         <div ng-controller="playerController">
+            <span ng-click="prevStage()"> < </span>Round {{stage}} <span ng-click="nextStage()"> > </span>
             <player ng-repeat="player in players" info="player"></player>
         </div>
       </div>
