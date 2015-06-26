@@ -1,18 +1,25 @@
-<div class="col-xs-12">
-  <div class="col-xs-1">
+<div class="rounds col-xs-12">
+  <div class="round col-xs-1">
     {{info.name}}
   </div>
-  <div class="col-xs-1">
+  <div ng-class="info.roundScore(info.score1)" class="round col-xs-1">
     {{info.score1}}
   </div>
-  <div class="col-xs-1">
+  <div ng-class="info.roundScore(info.score2)" class="round col-xs-1">
     {{info.score2}}
   </div>
-  <div class="col-xs-1">
+  <div ng-class="info.roundScore(info.score3)" class="round col-xs-1">
     {{info.score3}}
+  </div>
+  <div ng-show="info.tie" ng-class="info.roundScore(info.score4)" class="round tie col-xs-1">
+    {{info.score4}}
+  </div>
+  <div ng-show="info.head" ng-class="info.roundScore(info.score5)" class="round head col-xs-1">
+    {{info.score5}}
   </div>
   <div class="col-xs-2 rating">
     <div class="likes" ng-click="info.plusOne()">+</div>
     <div class="dislikes" ng-click="info.minusOne()">-</div>
+    {{info.score}}
   </div>
 </div>
