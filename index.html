@@ -98,7 +98,7 @@
               Final
             </div>
           </div>
-          <div ng-repeat="info in game.scores" class="rounds col-xs-12">
+          <div ng-class="info.place" ng-repeat="info in game.scores" class="rounds col-xs-12">
             <div class="round col-xs-2">
               {{info.name}}
             </div>
