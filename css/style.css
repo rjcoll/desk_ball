@@ -1,14 +1,21 @@
-player > div{
-  margin: 10px auto
+html {
+  height:100%;
 }
 
 player div {
   line-height: 40px;
 }
 
+body {
+    background-image: linear-gradient( 60deg, rgb(60, 88, 139) 10%, #f06d06 );
+    min-height: 100%;
+    color:white;
+    font-size:16px;
+}
+
 .likes,
 .dislikes {
-   background: #F65A5B ;
+   background: rgb(60, 88, 139) ;
  color: #fff;
  cursor: pointer;
  display: inline-block;
@@ -26,8 +33,8 @@ player div {
 
 .likes:hover,
 .dislikes:hover {
- color: #F65A5B ;
-   background: rgba(246, 90, 91, 0.25);
+   color: rgb(60, 88, 139) ;
+   background: rgba(60, 88, 139, 0.25);
    transition: background 500ms;
 }
 
@@ -43,7 +50,7 @@ player div {
 }
 
 .arrows {
-   background: #6CD8AF ;
+   background: #f06d06  ;
  color: #fff;
  cursor: pointer;
  display: inline-block;
@@ -60,20 +67,28 @@ player div {
 }
 
 .arrows:hover {
-  color: #6CD8AF;
-  background: rgba(108, 216, 175, 0.52);
+  color: #f06d06 ;
+  background: rgba(240, 109, 6, 0.5);
   transition: background 500ms;
 }
 
-.rounds {
+.header-row {
+  margin-top:20px;
+  font-weight: bold;
+}
+
+.round {
   text-align: center;
+  border-right: 1px white solid;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .score0 {
-  background-color: white;
+
 }
 
-.score1 {
+/*.score1 {
   background-color: orange;
 }
 
@@ -84,4 +99,4 @@ player div {
 .score3 {
   background-color: black;
   color:white;
-}
+}*/

@@ -18,7 +18,7 @@
 
     <!-- Jquery -->
     <script src="js/vendors/jquery.js"></script>
-    
+
     <!-- Angular -->
     <script src="js/vendors/angular.min.js"></script>
     <script src="js/vendors/angular-animate.js"></script>
@@ -42,38 +42,45 @@
 
 <body ng-app="deskBallApp">
 
-    <div class="wrapper">
+    <div ng-controller="playerController" class="wrapper">
       <div class="container">
         <h1>Deskball scoresheet</h1>
-        <div ng-controller="playerController">
+        <div>
             <div class="arrows" ng-click="prevStage()"><</div>
             <div class="stage">{{round(stage)}}</div>
             <div class="arrows" ng-click="nextStage()">></div>
-            <div class="col-xs-12">
-              <div class="round col-xs-1">
-
+            <div class="header-row col-xs-12">
+              <div class="round col-xs-2">
+                Players
               </div>
-              <div class="round col-xs-1">
+              <div class="round col-xs-2">
                 Round 1
               </div>
-              <div class="round col-xs-1">
+              <div class="round col-xs-2">
                 Round 2
               </div>
-              <div class="round col-xs-1">
+              <div class="round col-xs-2">
                 Round 3
               </div>
               <div ng-show="tie" class="round tie col-xs-1">
                 Tie
               </div>
               <div ng-show="head" class="round head col-xs-1">
-                H-to-H
+                Final
               </div>
             </div>
             <player ng-repeat="player in players" info="player"></player>
             <div class='btn' ng-click="add()">Save</div>
         </div>
       </div>
-    </div>
+      <!--<div class="container">
+        <div ng-repeat="game in list">
+          {{game.dateTime | date:'dd/MM/yy hh:mm a'}}
+          <p ng-repeat="score in game.scores">
+            {{score.name}} > {{score.score1}} | {{score.score2}} | {{score.score3}} | {{score.score4}} | {{score.score5}}
+          </p>
+        </div>
+    </div>-->
 
 
     <!-- Controllers -->
