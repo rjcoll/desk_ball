@@ -34,7 +34,7 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
     player.plusOne = function() {
       var stage = "score" + ($scope.stage + 1);
       if (this[stage] < 3) this[stage] += 1;
-      if (this[stage] >= 3 && $scope.stage < 4) $scope.stage += 1;
+      if (this[stage] >= 3 && $scope.stage < 4) $scope.nextStage();
       this.updateScore();
     };
     player.minusOne = function() {
@@ -44,13 +44,12 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
         //else if ($scope.stage > 1)  $scope.stage -= 1;
     };
 
-    player.roundScore = function(score) {
-      score = score.toString();
-      return "score" + score;
+    player.roundScore = function(round) {
+      if (round === $scope.stage) return 'cur-round'
     }
   });
 
-  $scope.rounds = ["Round 1", "Round 2", "Round 3", "Tiebreaker", "Head-to-Head"]
+  $scope.rounds = ["Round 1", "Round 2", "Round 3", "Tiebreaker", "Final"]
 
   $scope.stage = 0;
 
@@ -58,10 +57,13 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
 
   $scope.nextStage = function() {
     if ($scope.stage < 4) $scope.stage += 1;
+    if ($scope.stage === 3 & !$scope.tie) $scope.stage = 4;
+    if ($scope.stage === 4 & !$scope.head) $scope.stage = 2;
   }
 
   $scope.prevStage = function() {
     if ($scope.stage > 0) $scope.stage -= 1;
+    if ($scope.stage === 3 & !$scope.tie) $scope.stage = 2;
   }
 
   $scope.tie = false;
@@ -84,14 +86,6 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
       }
       return $scope.head = true;
       }
-  }
-
-  $scope.save = function() {
-    var json = {};
-    json.players = $scope.players;
-    json.date = Date.now();
-
-    console.log(json);
   }
 
   $scope.list = Person;
@@ -121,6 +115,23 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
 
      if(save) {
       alert('saved successfully');
+      $scope.players.forEach(function(player) {
+        player.score1 = 0;
+        player.score2 = 0;
+        player.score3 = 0;
+        player.score4 = 0;
+        player.score5 = 0;
+        player.score = 0;
+        player.tie = false;
+        player.head = false;
+      })
+
+      $scope.tie = false;
+      $scope.head = false;
+
+      $scope.stage = 0;
+
+
      } else {
       alert('something went wrong');
      }

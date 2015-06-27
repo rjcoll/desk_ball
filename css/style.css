@@ -1,5 +1,10 @@
 html {
   height:100%;
+
+}
+
+player {
+  display:block
 }
 
 player div {
@@ -7,10 +12,29 @@ player div {
 }
 
 body {
-    background-image: linear-gradient( 60deg, rgb(60, 88, 139) 10%, #f06d06 );
-    min-height: 100%;
+
     color:white;
     font-size:16px;
+    background-image: linear-gradient( 60deg, rgb(60, 88, 139) 10%, #f06d06 );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.games {
+  margin-bottom: 20px;
+}
+
+.games:after {
+  display:table;
+  content: " ";
+}
+
+.games .date {
+  font-weight: bold;
+}
+
+.games .header-row {
+  margin-top: 0px;
 }
 
 .likes,
@@ -77,6 +101,9 @@ body {
   font-weight: bold;
 }
 
+.cur-round {
+  background-color: rgba(255,255,255,0.2)
+}
 .round {
   text-align: center;
   border-right: 1px white solid;

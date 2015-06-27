@@ -42,6 +42,7 @@
 
 <body ng-app="deskBallApp">
 
+
     <div ng-controller="playerController" class="wrapper">
       <div class="container">
         <h1>Deskball scoresheet</h1>
@@ -53,34 +54,72 @@
               <div class="round col-xs-2">
                 Players
               </div>
-              <div class="round col-xs-2">
+              <div ng-class="players[0].roundScore(0)" class="round col-xs-2">
                 Round 1
               </div>
-              <div class="round col-xs-2">
+              <div ng-class="players[0].roundScore(1)" class="round col-xs-2">
                 Round 2
               </div>
-              <div class="round col-xs-2">
+              <div ng-class="players[0].roundScore(2)" class="round col-xs-2">
                 Round 3
               </div>
-              <div ng-show="tie" class="round tie col-xs-1">
+              <div ng-class="players[0].roundScore(3)" ng-show="tie" class="round tie col-xs-1">
                 Tie
               </div>
-              <div ng-show="head" class="round head col-xs-1">
+              <div ng-class="players[0].roundScore(4)" ng-show="head" class="round head col-xs-1">
                 Final
               </div>
             </div>
             <player ng-repeat="player in players" info="player"></player>
-            <div class='btn' ng-click="add()">Save</div>
+            <button class='btn' ng-click="add()">Save</button>
         </div>
       </div>
-      <!--<div class="container">
-        <div ng-repeat="game in list">
-          {{game.dateTime | date:'dd/MM/yy hh:mm a'}}
-          <p ng-repeat="score in game.scores">
-            {{score.name}} > {{score.score1}} | {{score.score2}} | {{score.score3}} | {{score.score4}} | {{score.score5}}
-          </p>
+      <div class="container">
+        <h2>Previous games</h2>
+        <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
+          <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
+          <div class="header-row col-xs-12">
+            <div class="round col-xs-2">
+              Players
+            </div>
+            <div class="round col-xs-2">
+              Round 1
+            </div>
+            <div class="round col-xs-2">
+              Round 2
+            </div>
+            <div class="round col-xs-2">
+              Round 3
+            </div>
+            <div class="round tie col-xs-1">
+              Tie
+            </div>
+            <div class="round head col-xs-1">
+              Final
+            </div>
+          </div>
+          <div ng-repeat="info in game.scores" class="rounds col-xs-12">
+            <div class="round col-xs-2">
+              {{info.name}}
+            </div>
+            <div class="round col-xs-2">
+              {{info.score1}}
+            </div>
+            <div class="round col-xs-2">
+              {{info.score2}}
+            </div>
+            <div class="round col-xs-2">
+              {{info.score3}}
+            </div>
+            <div class="round tie col-xs-1">
+              {{info.score4}}
+            </div>
+            <div class="round head col-xs-1">
+              {{info.score5}}
+            </div>
         </div>
-    </div>-->
+      </div>
+    </div>
 
 
     <!-- Controllers -->
