@@ -78,7 +78,6 @@
         </div>
       </div>
       <div class="container">
-      <d3bars bar-height="20" bar-padding="5"></d3bars>
         <h2>Previous games</h2>
         <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
           <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
