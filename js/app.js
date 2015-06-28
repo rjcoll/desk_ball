@@ -1,1 +1,1 @@
-var app = angular.module('deskBallApp', ['firebase', 'd3']);
+var app = angular.module('deskBallApp', ['firebase']);
