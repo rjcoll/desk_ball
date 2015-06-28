@@ -18,10 +18,13 @@
 
     <!-- Jquery -->
     <script src="js/vendors/jquery.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
 
     <!-- Angular -->
     <script src="js/vendors/angular.min.js"></script>
     <script src="js/vendors/angular-animate.js"></script>
+
+        <script src="js/services/d3Service.js"></script>
 
     <!-- Bowerjs -->
     <script src="bower_components/firebase/firebase.js"></script>
@@ -75,6 +78,7 @@
         </div>
       </div>
       <div class="container">
+      <d3bars bar-height="20" bar-padding="5"></d3bars>
         <h2>Previous games</h2>
         <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
           <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
@@ -127,6 +131,10 @@
 
     <!-- Directives -->
     <script src="js/directives/playerScore.js"></script>
+    <script src="js/directives/barChart.js"></script>
+
+    <!-- Services -->
+    <script src="js/services/firebase.js"></script>
 
 
 
