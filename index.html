@@ -45,7 +45,8 @@
 
 <body ng-app="deskBallApp">
 
-
+    <div ng-controller="chartController" class="wrapper">
+    </div>
     <div ng-controller="playerController" class="wrapper">
       <div class="container">
         <h1>Deskball scoresheet</h1>
@@ -78,7 +79,6 @@
         </div>
       </div>
       <div class="container">
-      <d3bars bar-height="20" bar-padding="5"></d3bars>
         <h2>Previous games</h2>
         <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
           <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
@@ -126,12 +126,13 @@
     </div>
 
 
+
     <!-- Controllers -->
     <script src="js/controllers/playerController.js"></script>
+    <script src="js/controllers/chartController.js"></script>
 
     <!-- Directives -->
     <script src="js/directives/playerScore.js"></script>
-    <script src="js/directives/barChart.js"></script>
 
     <!-- Services -->
     <script src="js/services/firebase.js"></script>

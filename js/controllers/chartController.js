@@ -1,44 +1,34 @@
-app
-  .directive('barChart', ['d3Service', function(d3Service) {
-    return {
-      link: function(scope, element, attrs) {
-        d3Service.d3().then(function(d3) {
-          // d3 is the raw d3 object
-        });
-      }}
-    }]);
+app.controller('chartController', ['$scope', 'Person', function($scope, Person) {
+          var controller = angular.element('[ng-controller="chartController"]');
 
-app
-  .directive('d3bars', [function() {
-    return {
-      restrict: 'EA',
-      scope: {},
-      link: function(scope, element, attrs) {
-          var svg = d3.select(element[0])
+          console.log(controller);
+          var svg = d3.select('[ng-controller="chartController"]')
             .append('svg')
             .style('width', '100%');
 
+            console.log($scope)
           // Browser onresize event
-          window.onresize = function() {
-            scope.$apply();
-          };
+  window.onresize = function() {
+    $scope.$apply();
+  };
 
-          // hard-code data
-          scope.data = [
-            {name: "Greg", score: 98},
-            {name: "Ari", score: 96},
-            {name: 'Q', score: 75},
-            {name: "Loser", score: 48}
-          ];
+  // hard-code data
+  $scope.data = Person;
 
-          // Watch for resize event
-          scope.$watch(function() {
-            return angular.element(window)[0].innerWidth;
-          }, function() {
-            scope.render(scope.data);
-          });
+  Person.$loaded()
+    .then(function(x) {
+      console.log(Person.length)
+    })
 
-          scope.render = function(data) {
+
+  // Watch for resize event
+  $scope.$watch(function() {
+    return angular.element(window)[0].innerWidth;
+  }, function() {
+
+  });
+
+          /*scope.render = function(data) {
             // our custom d3 code
             // remove all previous items before render
             svg.selectAll('*').remove();
@@ -82,6 +72,5 @@ app
                   .attr('width', function(d) {
                     return xScale(d.score);
                   });
-        };
-      }};
+        };*/
   }]);
