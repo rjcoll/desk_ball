@@ -44,10 +44,14 @@
 <body ng-app="deskBallApp">
 
     <div ng-controller="chartController" class="wrapper">
+      <div class="container">
+        <h1>Deskball scoresheet</h1>
+        <h3>Charts</h3>
+      </div>
     </div>
     <div ng-controller="playerController" class="wrapper">
       <div class="container">
-        <h1>Deskball scoresheet</h1>
+        <h3>Current game</h3>
         <div>
             <div class="arrows" ng-click="prevStage()"><</div>
             <div class="stage">{{round(stage)}}</div>
@@ -77,7 +81,7 @@
         </div>
       </div>
       <div class="container">
-        <h2>Previous games</h2>
+        <h3>Previous games</h3>
         <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
           <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
           <div class="header-row col-xs-12">

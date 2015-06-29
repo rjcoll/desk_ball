@@ -3,8 +3,28 @@ html {
 
 }
 
+.container {
+  margin-bottom: 40px;
+}
+
+.
+
 player {
   display:block
+}
+
+svg text {
+  fill: white;
+  font-size: 14px;
+}
+
+svg .x.axis {
+  fill:none;
+  stroke:white;
+}
+
+svg .x.axis .tick {
+  stroke: none;
 }
 
 player div {

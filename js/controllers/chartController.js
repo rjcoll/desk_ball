@@ -2,7 +2,7 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
   var controller = angular.element('[ng-controller="chartController"]');
 
 
-  var svg = d3.select('[ng-controller="chartController"]')
+  var svg = d3.select('[ng-controller="chartController"] .container')
     .append('svg')
     .style('width', '100%');
 
@@ -86,6 +86,8 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
                 xAxis = d3.svg.axis()
                   .scale(xScale)
+                  .tickSize(0)
+                  .tickPadding(10)
                   .orient("bottom");
 
                 // our yScale
@@ -97,11 +99,6 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
             // set the height based on the calculations above
             svg.attr('height', svgHeight);
-
-            svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate("+ margin +"," + (height + margin) + ")")
-              .call(xAxis);
 
             var chart = svg
               .append('g')
@@ -127,6 +124,11 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
               .attr('x', xScale.rangeBand()/2)
               .attr('text-anchor', 'middle')
               .text(function(d) {return d.score})
+
+            svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate("+ margin +"," + (height + margin) + ")")
+              .call(xAxis);
         };
 
         var update_chart = function(data) {
