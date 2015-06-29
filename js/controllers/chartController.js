@@ -1,13 +1,12 @@
 app.controller('chartController', ['$scope', 'Person', function($scope, Person) {
-          var controller = angular.element('[ng-controller="chartController"]');
+  var controller = angular.element('[ng-controller="chartController"]');
 
-          console.log(controller);
-          var svg = d3.select('[ng-controller="chartController"]')
-            .append('svg')
-            .style('width', '100%');
 
-            console.log($scope)
-          // Browser onresize event
+  var svg = d3.select('[ng-controller="chartController"]')
+    .append('svg')
+    .style('width', '100%');
+
+  // Browser onresize event
   window.onresize = function() {
     $scope.$apply();
   };
@@ -17,7 +16,23 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
   Person.$loaded()
     .then(function(x) {
-      console.log(Person.length)
+      var data = [
+            {name: "Rob", score: 0},
+            {name: "Ben", score: 0},
+            {name: 'Will', score: 0}
+          ]
+
+      Person.forEach(function(game) {
+        var winner = game.game.winner;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i]['name'] == winner) {
+              return data[i]['score']++;
+          }
+        }
+
+        //data[winner].score += 1;
+      })
+      $scope.render(data);
     })
 
 
@@ -28,49 +43,72 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
   });
 
-          /*scope.render = function(data) {
+          $scope.render = function(data) {
             // our custom d3 code
             // remove all previous items before render
-            svg.selectAll('*').remove();
 
-            var margin = parseInt(attrs.margin) || 20,
-            barHeight = parseInt(attrs.barHeight) || 20,
-            barPadding = parseInt(attrs.barPadding) || 5;
+            var margin = 25,
+            barWidth = 20,
+            svgHeight = 150,
+            barPadding = 5;
 
             // If we don't pass any data, return out of the element
             if (!data) return;
 
             // setup variables
-            var width = d3.select(element[0]).node().offsetWidth - margin,
+            var width = 100,
                 // calculate the height
-                height = scope.data.length * (barHeight + barPadding),
+                height = 100,
                 // Use the category20() scale function for multicolor support
                 color = d3.scale.category20(),
+
+                xScale = d3.scale.ordinal()
+                  .rangeRoundBands([0, 100], .1);
+
+                xScale.domain(data.map(function(d) {return d.name;}))
+
+                xAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom");
+
                 // our xScale
-                xScale = d3.scale.linear()
+                yScale = d3.scale.linear()
                   .domain([0, d3.max(data, function(d) {
                     return d.score;
                   })])
-                  .range([0, width]);
+                  .range([0, height]);
 
             // set the height based on the calculations above
-            svg.attr('height', height);
+            svg.attr('height', svgHeight);
+
+            svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate("+ margin +"," + (height + margin) + ")")
+              .call(xAxis);
+
+            var chart = svg
+              .append('g')
+              .attr('transform', "translate(" + margin + "," + margin + ")")
+
+            var bar = chart.selectAll("g")
+              .data(data)
+            .enter().append("g")
+              .attr("transform", function(d) { return "translate(" + xScale(d.name) + ",0)"; });
 
             //create the rectangles for the bar chart
-            svg.selectAll('rect')
-              .data(data).enter()
-                .append('rect')
-                .attr('height', barHeight)
-                .attr('width', 140)
-                .attr('x', Math.round(margin/2))
-                .attr('y', function(d,i) {
-                  return i * (barHeight + barPadding);
-                })
-                .attr('fill', function(d) { return color(d.score); })
-                .transition()
-                  .duration(1000)
-                  .attr('width', function(d) {
-                    return xScale(d.score);
-                  });
-        };*/
+            bar.append('rect')
+              .attr('class', 'score-bar')
+              .attr("y", function(d) { return height - yScale(d.score); })
+              .attr("height", function(d) { return yScale(d.score); })
+              .attr("width", xScale.rangeBand())
+                .attr('fill', function(d) { return color(d.name); })
+
+
+            bar.append('text')
+              .attr('class', 'score-text')
+              .attr("y", function(d) { return height - yScale(d.score) - 5; })
+              .attr('x', xScale.rangeBand()/2)
+              .attr('text-anchor', 'middle')
+              .text(function(d) {return d.score})
+        };
   }]);
