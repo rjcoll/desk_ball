@@ -66,7 +66,7 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
             var margin = 25,
             barWidth = 20,
-            svgHeight = 150,
+            svgHeight = 170,
             barPadding = 5;
 
             // If we don't pass any data, return out of the element
@@ -102,7 +102,11 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
             var chart = svg
               .append('g')
-              .attr('transform', "translate(" + margin + "," + margin + ")")
+              .attr('transform', "translate(" + margin + "," + (margin + 20) + ")")
+
+            chart.append('text')
+              .text('Wins')
+              .attr('transform', 'translate(0, -30)')
 
             var bar = chart.selectAll("g")
               .data(data)
@@ -127,7 +131,7 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
             svg.append("g")
               .attr("class", "x axis")
-              .attr("transform", "translate("+ margin +"," + (height + margin) + ")")
+              .attr("transform", "translate("+ margin +"," + (height + margin + 20) + ")")
               .call(xAxis);
         };
 
