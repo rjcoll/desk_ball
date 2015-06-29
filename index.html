@@ -83,7 +83,7 @@
       <div class="container">
         <h3>Previous games</h3>
         <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
-          <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
+          <span class="date">{{game.dateTime | date: 'dd/MM/yy'}}</span>
           <div class="header-row col-xs-12">
             <div class="round col-xs-2">
               Players
