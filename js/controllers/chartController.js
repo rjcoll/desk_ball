@@ -33,15 +33,32 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
         //data[winner].score += 1;
       })
       $scope.render(data);
+
+      Person.$watch(function(event) {
+        //update chart
+        var data = [
+              {name: "Rob", score: 0},
+              {name: "Ben", score: 0},
+              {name: 'Will', score: 0}
+            ]
+
+        Person.forEach(function(game) {
+          var winner = game.game.winner;
+          for (var i = 0; i < data.length; i++) {
+            if (data[i]['name'] == winner) {
+                return data[i]['score']++;
+            }
+          }
+
+          //data[winner].score += 1;
+        })
+        update_chart(data);
+      });
     })
 
 
   // Watch for resize event
-  $scope.$watch(function() {
-    return angular.element(window)[0].innerWidth;
-  }, function() {
 
-  });
 
           $scope.render = function(data) {
             // our custom d3 code
@@ -71,12 +88,12 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
                   .scale(xScale)
                   .orient("bottom");
 
-                // our xScale
+                // our yScale
                 yScale = d3.scale.linear()
                   .domain([0, d3.max(data, function(d) {
                     return d.score;
                   })])
-                  .range([0, height]);
+                  .range([height, 0]);
 
             // set the height based on the calculations above
             svg.attr('height', svgHeight);
@@ -98,17 +115,40 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
             //create the rectangles for the bar chart
             bar.append('rect')
               .attr('class', 'score-bar')
-              .attr("y", function(d) { return height - yScale(d.score); })
-              .attr("height", function(d) { return yScale(d.score); })
+              .attr("y", function(d) { return yScale(d.score) })
+              .attr("height", function(d) { return height - yScale(d.score); })
               .attr("width", xScale.rangeBand())
                 .attr('fill', function(d) { return color(d.name); })
 
 
             bar.append('text')
               .attr('class', 'score-text')
-              .attr("y", function(d) { return height - yScale(d.score) - 5; })
+              .attr("y", function(d) { return yScale(d.score) - 5; })
               .attr('x', xScale.rangeBand()/2)
               .attr('text-anchor', 'middle')
               .text(function(d) {return d.score})
         };
+
+        var update_chart = function(data) {
+
+          var yScale = d3.scale.linear()
+            .domain([0, d3.max(data, function(d) {
+              return d.score;
+            })])
+            .range([100, 0]);
+
+
+          var bars = d3.selectAll('.score-bar');
+
+          bars.data(data).transition().delay(100).duration(750)
+            .attr("y", function(d) { return yScale(d.score) })
+            .attr("height", function(d) { return 100 - yScale(d.score); })
+
+          var labels = d3.selectAll('.score-text');
+
+          labels.data(data).transition().delay(100).duration(750)
+            .attr("y", function(d) { return yScale(d.score) - 5; })
+            .text(function(d) {return d.score})
+
+        }
   }]);
