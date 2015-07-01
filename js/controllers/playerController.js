@@ -182,7 +182,6 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
      });
 
      if(save) {
-      alert('Saved successfully');
       $scope.players.forEach(function(player) {
         player.score1 = 0;
         player.score2 = 0;
