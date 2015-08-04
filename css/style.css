@@ -27,6 +27,12 @@ svg .x.axis .tick {
   stroke: none;
 }
 
+
+.line {
+  fill: none;
+  stroke-width: 3px;
+}
+
 player div {
   line-height: 40px;
 }
