@@ -3,8 +3,28 @@ html {
 
 }
 
+.container {
+  margin-bottom: 40px;
+}
+
+.
+
 player {
   display:block
+}
+
+svg text {
+  fill: white;
+  font-size: 14px;
+}
+
+svg .x.axis {
+  fill:none;
+  stroke:white;
+}
+
+svg .x.axis .tick {
+  stroke: none;
 }
 
 player div {
@@ -44,9 +64,9 @@ body {
  cursor: pointer;
  display: inline-block;
  font-size: 15px;
-   line-height: 40px;
-   min-width: 40px;
-   height: 40px;
+   line-height: 25px;
+   min-width: 25px;
+   height: 25px;
    border-radius: 50%;
    text-align: center;
    font-weight: 200;

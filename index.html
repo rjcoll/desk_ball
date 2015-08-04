@@ -18,6 +18,10 @@
 
     <!-- Jquery -->
     <script src="js/vendors/jquery.js"></script>
+<<<<<<< HEAD
+=======
+    <script src="js/vendors/d3.v3.min.js"></script>
+>>>>>>> d3
 
     <!-- Angular -->
     <script src="js/vendors/angular.min.js"></script>
@@ -25,7 +29,7 @@
 
     <!-- Bowerjs -->
     <script src="bower_components/firebase/firebase.js"></script>
-  <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
 
 
     <!-- Application -->
@@ -42,10 +46,15 @@
 
 <body ng-app="deskBallApp">
 
-
-    <div ng-controller="playerController" class="wrapper">
+    <div ng-controller="chartController" class="wrapper">
       <div class="container">
         <h1>Deskball scoresheet</h1>
+        <h3>Charts</h3>
+      </div>
+    </div>
+    <div ng-controller="playerController" class="wrapper">
+      <div class="container">
+        <h3>Current game</h3>
         <div>
             <div class="arrows" ng-click="prevStage()"><</div>
             <div class="stage">{{round(stage)}}</div>
@@ -75,9 +84,13 @@
         </div>
       </div>
       <div class="container">
+<<<<<<< HEAD
         <h2>Previous games</h2>
+=======
+        <h3>Previous games</h3>
+>>>>>>> d3
         <div class="games" ng-repeat="game in list | orderBy:'-dateTime'">
-          <span class="date">{{game.dateTime | date: 'hh:mma dd/MM/yy'}}</span>
+          <span class="date">{{game.dateTime | date: 'dd/MM/yy'}}</span>
           <div class="header-row col-xs-12">
             <div class="round col-xs-2">
               Players
@@ -122,8 +135,10 @@
     </div>
 
 
+
     <!-- Controllers -->
     <script src="js/controllers/playerController.js"></script>
+    <script src="js/controllers/chartController.js"></script>
 
     <!-- Directives -->
     <script src="js/directives/playerScore.js"></script>
