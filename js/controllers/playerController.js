@@ -8,10 +8,10 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
       name: 'Rob'
     },
     {
-      name: 'Ben'
+      name: 'James'
     },
     {
-      name: 'Will'
+      name: 'Ben'
     }
   ];
 

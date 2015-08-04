@@ -1,3 +1,28 @@
+Array.prototype.equals = function (array, strict) {
+    if (!array)
+        return false;
+
+    if (arguments.length == 1)
+        strict = true;
+
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            if (!this[i].equals(array[i], strict))
+                return false;
+        }
+        else if (strict && this[i] != array[i]) {
+            return false;
+        }
+        else if (!strict) {
+            return this.sort().equals(array.sort(), true);
+        }
+    }
+    return true;
+}
+
 app.controller('chartController', ['$scope', 'Person', function($scope, Person) {
   var controller = angular.element('[ng-controller="chartController"]');
 
@@ -66,9 +91,11 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
   ]
 
+  var players = ["Rob", "James", "Ben"];
+
   Person.$loaded()
     .then(function(x) {
-      var data = calcScores();
+      var data = calcScores(players);
 
       // set the height based on the calculations above
 
@@ -102,7 +129,7 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
       //after charts are drawn, define watch event
       Person.$watch(function(event) {
         //update chart
-        var data = calcScores();
+        var data = calcScores(["Rob", "James", "Ben"]);
 
         updateLineChart(data, null, null);
 
@@ -406,16 +433,31 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
     }
 
-    var calcScores = function() {
-      var data = [
-        {name: "Rob", score: 0, loss: 0, round1: 0, round2:0, round3: 0, trend: [{game: 0, value: 0}]},
-        {name: "Ben", score: 0, loss: 0, round1: 0, round2:0, round3: 0, trend: [{game: 0, value: 0}]},
-        {name: "Will", score: 0, loss: 0, round1: 0, round2:0, round3: 0, trend: [{game: 0, value: 0}]},
-      ]
+    var calcScores = function(players) {
+
+      /* take players as an array, validate and then create an array */
+
+      if (players.length != 3) return;
+
+      var data = [];
+
+      for (var i=0;i<players.length;i++) {
+        data[i] = {name: players[i], score: 0, loss: 0, round1: 0, round2:0, round3: 0, trend: [{game: 0, value: 0}]}
+      }
 
       var trendScore = [0,0,0]
 
+      /*Filter games just for those with the right players*/
+      var games = [];
+
       Person.forEach(function(game, index) {
+        if (players.equals([game.game.winner, game.game.loser, game.game.middle], false)) {
+          games.push(game)
+        }
+      })
+
+      /* iterate over games to calculate scores for the right players*/
+      games.forEach(function(game, index) {
         var winner = game.game.winner,
             loser = game.game.loser
 
