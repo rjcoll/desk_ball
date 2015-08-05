@@ -13,6 +13,13 @@ player {
   display:block
 }
 
+player input {
+  background-color: rgba(0,0,0,0);
+  width: 100%;
+  border: none;
+  line-height: normal
+}
+
 svg text {
   fill: white;
   font-size: 14px;

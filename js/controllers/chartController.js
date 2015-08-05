@@ -23,9 +23,8 @@ Array.prototype.equals = function (array, strict) {
     return true;
 }
 
-app.controller('chartController', ['$scope', 'Person', function($scope, Person) {
+app.controller('chartController', ['$scope', 'Person', function($scope, Person, selectPlayers) {
   var controller = angular.element('[ng-controller="chartController"]');
-
 
   var svg = d3.select('[ng-controller="chartController"] .container')
     .append('svg')
@@ -91,7 +90,7 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
 
   ]
 
-  var players = ["Rob", "James", "Ben"];
+  var players = ["Rob", "Hannah", "Ben"];
 
   Person.$loaded()
     .then(function(x) {
@@ -129,7 +128,7 @@ app.controller('chartController', ['$scope', 'Person', function($scope, Person) 
       //after charts are drawn, define watch event
       Person.$watch(function(event) {
         //update chart
-        var data = calcScores(["Rob", "James", "Ben"]);
+        var data = calcScores(players);
 
         updateLineChart(data, null, null);
 

@@ -1,6 +1,6 @@
 <div class="rounds col-xs-12">
   <div class="round col-xs-2">
-    {{info.name}}
+    <input type="text" ng-model="info.name"></input>
   </div>
   <div ng-class="info.roundScore(0)" class="round round-{{info.score1}} col-xs-2">
     {{info.score1}}
