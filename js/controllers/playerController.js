@@ -1,17 +1,17 @@
-app.controller('playerController', ['$scope', 'Person', function($scope, Person) {
+app.controller('playerController', ['$scope', 'Person', 'players', function($scope, Person, players) {
 
   /* === PLAYERS === */
 
   /* Define the players */
   $scope.players = [
     {
-      name: 'Rob'
+      name: players[0]
     },
     {
-      name: 'James'
+      name: players[1]
     },
     {
-      name: 'Ben'
+      name: players[2]
     }
   ];
 
