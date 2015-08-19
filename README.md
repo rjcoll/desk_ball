@@ -8,3 +8,4 @@ To Do
 > add select controller
 > create dependency on selector
 > Redesign chart to make width greater for wider names
+> add in label movement for line chart
