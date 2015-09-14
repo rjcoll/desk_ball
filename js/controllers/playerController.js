@@ -1,17 +1,28 @@
-app.controller('playerController', ['$scope', 'Person', 'players', function($scope, Person, players) {
-
+app.controller('playerController', ['$scope','$rootScope' , 'Person', 'chartPlayers', function($scope, $rootScope, Person, chartPlayers) {
   /* === PLAYERS === */
+
+  this.chartPlayers = chartPlayers;
+
+  this.change = function(value) {
+      chartPlayers.value = [ $scope.players[0].name, $scope.players[1].name, $scope.players[2].name ];
+      console.log(chartPlayers.value)
+  }
+
+  $scope.names = function(value) {
+    chartPlayers.value = [ $scope.players[0].name, $scope.players[1].name, $scope.players[2].name ];
+    console.log(chartPlayers.value)
+  }
 
   /* Define the players */
   $scope.players = [
     {
-      name: players[0]
+      name: chartPlayers.value[0]
     },
     {
-      name: players[1]
+      name: chartPlayers.value[1]
     },
     {
-      name: players[2]
+      name: chartPlayers.value[2]
     }
   ];
 
@@ -181,7 +192,16 @@ app.controller('playerController', ['$scope', 'Person', 'players', function($sco
       dateTime: Date.now()
      });
 
+     updateNames = function(value) {
+       chartPlayers.value = [ $scope.players[0].name, $scope.players[1].name, $scope.players[2].name ];
+       console.log(chartPlayers.value)
+     }
+
+     updateNames();
+
+
      if(save) {
+
       $scope.players.forEach(function(player) {
         player.score1 = 0;
         player.score2 = 0;
@@ -204,5 +224,9 @@ app.controller('playerController', ['$scope', 'Person', 'players', function($sco
       alert('Something went wrong');
      }
     }
+
+
+
+
 
 }]);

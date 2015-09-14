@@ -23,8 +23,10 @@ Array.prototype.equals = function (array, strict) {
     return true;
 }
 
-app.controller('chartController', ['$scope', 'Person', 'players', function($scope, Person, players) {
+app.controller('chartController', ['$scope', 'Person', 'chartPlayers', function($scope, Person, chartPlayers) {
   var controller = angular.element('[ng-controller="chartController"]');
+
+  players = chartPlayers.value;
 
   var svg = d3.select('[ng-controller="chartController"] .container')
     .append('svg')
@@ -127,11 +129,16 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
       //after charts are drawn, define watch event
       Person.$watch(function(event) {
         //update chart
-        var data = calcScores(["Rob", "James", "Ben"]);
+
+        var data = calcScores(chartPlayers.value);
 
         updateLineChart(data, null, null);
 
+        d3.selectAll('.x.axis.bar').remove()
+
         for (var i=0; i<charts.length; i++) {
+
+          position.x = 140*i;
 
           label = charts[i].label;
 
@@ -139,7 +146,9 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
             d.value = d[charts[i].value];
           })
 
-          updateBarChart(data, null, label);
+
+
+          updateBarChart(data, null, position, null,label);
 
 
         }
@@ -149,13 +158,22 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
       //define watch event on players too
     })
 
-    var updateBarChart = function(data, dimension, labels) {
+    var updateBarChart = function(data, margin, position, dimension, labels) {
 
       if(!dimension) {
         dimension = {
           height: 100,
-          width: 100
+          width: 200
         }
+      }
+
+      if(!margin) {
+        margin = {
+          top: 25,
+          bottom: 45,
+          left: 0,
+          right: 20
+        };
       }
 
       var yScale = d3.scale.linear()
@@ -163,6 +181,24 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
           return Math.max(d.score, d.loss, d.round1, d.round2, d.round3);
         })])
         .range([dimension.height, 0]);
+
+        var color = d3.scale.category20(),
+
+            xScale = d3.scale.ordinal()
+              .rangeRoundBands([0, 100], .1);
+
+        xScale.domain(data.map(function(d) {return d.name;}))
+
+        xAxis = d3.svg.axis()
+          .scale(xScale)
+          .tickSize(0)
+          .tickPadding(10)
+          .orient("bottom");
+
+        svg.append("g")
+          .attr("class", "x axis bar")
+          .attr("transform", "translate("+ (margin.left + position.x) +"," + (dimension.height + margin.top + 20) + ")")
+          .call(xAxis);
 
 
       var bars = d3.selectAll('.' + labels.barClass);
@@ -260,7 +296,7 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
         .text(function(d) {return d.value})
 
       svg.append("g")
-        .attr("class", "x axis")
+        .attr("class", "x axis bar")
         .attr("transform", "translate("+ (margin.left + position.x) +"," + (dimension.height + margin.top + 20) + ")")
         .call(xAxis);
 
@@ -405,8 +441,9 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
           .x(function(d) { return x(d.game); })
           .y(function(d) { return y(d.value); });
 
+      console.log(data[0]);
 
-      x.domain(d3.extent(data[0].trend, function(d) { return d.game; }));
+      x.domain(d3.extent(data[0].trend, function(d) { console.log(d.game); return d.game; }));
 
       y.domain([0,
         d3.max(data, function(d) {
@@ -416,7 +453,7 @@ app.controller('chartController', ['$scope', 'Person', 'players', function($scop
         })
       ]);
 
-      svg.selectAll('.line-chart .x.axis').call(xAxis);
+      svg.selectAll('.line-chart.x.axis').call(xAxis);
 
       var lines = svg.selectAll(".player-line .line").data(data);
 
