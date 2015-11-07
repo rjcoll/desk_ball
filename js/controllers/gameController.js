@@ -1,21 +1,27 @@
-app.controller('playerController', ['$scope', 'Person', function($scope, Person) {
+app.controller('gameController', ['$scope', 'Person', 'playerService', function($scope, Person, playerService) {
 
   /* === PLAYERS === */
 
   /* Define the players */
+  $scope.playerService = playerService;
+
   $scope.players = [
     {
-      name: 'Rob'
+      name: null
     },
     {
-      name: 'Ben'
+      name: null
     },
     {
-      name: 'Will'
+      name: null
     }
   ];
 
+  $scope.players[0].name = playerService.value0
+  $scope.players[1].name = playerService.value1
+  $scope.players[2].name = playerService.value2
 
+  //create the empty schema for the game
   $scope.players.forEach(function(player) {
     player.score1 = 0;
     player.score2 = 0;
@@ -41,6 +47,7 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
       if (this[stage] >= 3 && $scope.stage < 4) $scope.nextStage();
       this.updateScore();
     };
+
     player.minusOne = function() {
       var stage = "score" + ($scope.stage + 1);
       if (this[stage] > 0) this[stage] -= 1;
@@ -59,8 +66,6 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
   $scope.stage = 0;
 
   $scope.rounds = ["Round 1", "Round 2", "Round 3", "Tiebreaker", "Final"];
-
-
 
   // helpers
   $scope.round = function(stage) {return $scope.rounds[stage]}
@@ -86,6 +91,10 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
 
   //sort out where we are in the game
   game = function() {
+
+    $scope.players[0].name = playerService.value0
+    $scope.players[1].name = playerService.value1
+    $scope.players[2].name = playerService.value2
 
     //is it a tie?
     if ($scope.players[0].score === 1 && $scope.players[1].score === 1 && $scope.players[2].score === 1) {
@@ -143,19 +152,16 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
     }
   }
 
-  /*Sort out adding the game to the database*/
-  /*========================================*/
-  $scope.list = Person;
-
-  $scope.add = function() {
-
-    if (!$scope.end) return alert('Not the end of the game!')
+  addGame = function(end, players) {
+    if (!end) return alert('Not the end of the game!')
 
     var scores = [];
 
-    $scope.players.forEach(function(player) {
+    var names = [playerService.value0,playerService.value1,playerService.value2]
+
+    players.forEach(function(player, index) {
       var score = {
-        name: player.name,
+        name: names[index],
         score: player.score,
         score1: player.score1,
         score2: player.score2,
@@ -175,13 +181,25 @@ app.controller('playerController', ['$scope', 'Person', function($scope, Person)
       loser: $scope.loser
     }
 
-     var save = Person.$add({
+    var save = {
       game: game,
       scores: scores,
       dateTime: Date.now()
-     });
+    }
+
+    return save
+  }
+
+  $scope.add = function() {
+
+    players = [playerService.value0,playerService.value1,playerService.value2]
+
+    var save = addGame($scope.end, $scope.players)
+
+    save = Person.$add(save);
 
      if(save) {
+
       $scope.players.forEach(function(player) {
         player.score1 = 0;
         player.score2 = 0;

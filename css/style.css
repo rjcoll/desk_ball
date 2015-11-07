@@ -3,6 +3,15 @@ html {
 
 }
 
+.rounds input {
+  background:none;
+  width: 100%;
+  border: none;
+  height:100%;
+  line-height:inherit;
+  padding:0
+}
+
 .container {
   margin-bottom: 40px;
 }
