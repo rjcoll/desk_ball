@@ -12,6 +12,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
@@ -46,6 +47,76 @@
     <div ng-controller="chartController" class="wrapper">
       <div class="container">
         <h1>Deskball scoresheet</h1>
+        <h3>Game stats</h3>
+<table class="table ">
+
+  <thead>
+    <tr>
+      <td>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+          Name
+          <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'wins'; sortReverse = !sortReverse">
+        Wins
+          <span ng-show="sortType == 'wins' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'wins' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'finals()'; sortReverse = !sortReverse">
+        Finals
+          <span ng-show="sortType == 'finals()' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'finals()' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'losses'; sortReverse = !sortReverse">
+        Losses
+          <span ng-show="sortType == 'losses' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'losses' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'games'; sortReverse = !sortReverse">
+        Games
+          <span ng-show="sortType == 'games' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'games' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'win_perc_all()'; sortReverse = !sortReverse">
+        % wins (games)
+          <span ng-show="sortType == 'win_perc_all()' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'win_perc_all()' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+      <td>
+        <a href="#" ng-click="sortType = 'win_perc_finals()'; sortReverse = !sortReverse">
+        % wins (finals)
+          <span ng-show="sortType == 'win_perc_finals()' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'win_perc_finals()' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="rank in ranking | orderBy:sortType:sortReverse">
+      <td>{{ rank.name }}</td>
+      <td>{{ rank.wins }}</td>
+      <td>{{ rank.finals() }}</td>
+      <td>{{ rank.losses }}</td>
+      <td>{{ rank.games }}</td>
+      <td>{{ rank.win_perc_all() }}%</td>
+      <td>{{ rank.win_perc_finals() }}%</td>
+    </tr>
+  </tbody>
+
+</table>
         <h3>Charts</h3>
         <button class='btn' ng-click="update()">Update</button>
       </div>
@@ -78,80 +149,30 @@
               </div>
             </div>
 
-
-            <div class="rounds col-xs-12">
-              <div class="round col-xs-2">
-                <input type='text' ng-blur="names()" ng-model="playerService.value0"/>
-              </div>
-              <div ng-class="players[0].roundScore(0)" class="round round-{{players[0].score1}} col-xs-2">
-                {{players[0].score1}}
-              </div>
-              <div ng-class="players[0].roundScore(1)" class="round round-{{players[0].score2}} col-xs-2">
-                {{players[0].score2}}
-              </div>
-              <div ng-class="players[0].roundScore(2)" class="round round-{{players[0].score3}} col-xs-2">
-                {{players[0].score3}}
-              </div>
-              <div ng-show="players[0].tie" ng-class="players[0].roundScore(3)" class="round round-{{players[0].score4}} tie col-xs-1">
-                {{players[0].score4}}
-              </div>
-              <div ng-show="players[0].head" ng-class="players[0].roundScore(4)" class="round head round-{{players[0].score5}} col-xs-1">
-                {{players[0].score5}}
-              </div>
-              <div class="col-xs-2 rating">
-                <div class="likes" ng-click="players[0].plusOne()">+</div>
-                <div class="dislikes" ng-click="players[0].minusOne()">-</div>
-              </div>
-            </div>
-
-
-            <div class="rounds col-xs-12">
-              <div class="round col-xs-2">
-                <input type='text' ng-blur="names()" ng-model="playerService.value1"/>
-              </div>
-              <div ng-class="players[1].roundScore(0)" class="round round-{{players[1].score1}} col-xs-2">
-                {{players[1].score1}}
-              </div>
-              <div ng-class="players[1].roundScore(1)" class="round round-{{players[1].score2}} col-xs-2">
-                {{players[1].score2}}
-              </div>
-              <div ng-class="players[1].roundScore(2)" class="round round-{{players[1].score3}} col-xs-2">
-                {{players[1].score3}}
-              </div>
-              <div ng-show="players[1].tie" ng-class="players[1].roundScore(3)" class="round round-{{players[1].score4}} tie col-xs-1">
-                {{players[1].score4}}
-              </div>
-              <div ng-show="players[1].head" ng-class="players[1].roundScore(4)" class="round head round-{{players[1].score5}} col-xs-1">
-                {{players[1].score5}}
-              </div>
-              <div class="col-xs-2 rating">
-                <div class="likes" ng-click="players[1].plusOne()">+</div>
-                <div class="dislikes" ng-click="players[1].minusOne()">-</div>
-              </div>
-            </div>
-
-            <div class="rounds col-xs-12">
-              <div class="round col-xs-2">
-                <input type='text' ng-blur="names()" ng-model="playerService.value2"/>
-              </div>
-              <div ng-class="players[2].roundScore(0)" class="round round-{{players[2].score1}} col-xs-2">
-                {{players[2].score1}}
-              </div>
-              <div ng-class="players[2].roundScore(1)" class="round round-{{players[2].score2}} col-xs-2">
-                {{players[2].score2}}
-              </div>
-              <div ng-class="players[2].roundScore(2)" class="round round-{{players[2].score3}} col-xs-2">
-                {{players[2].score3}}
-              </div>
-              <div ng-show="players[2].tie" ng-class="players[2].roundScore(3)" class="round round-{{players[2].score4}} tie col-xs-1">
-                {{players[2].score4}}
-              </div>
-              <div ng-show="players[2].head" ng-class="players[2].roundScore(4)" class="round head round-{{players[2].score5}} col-xs-1">
-                {{players[2].score5}}
-              </div>
-              <div class="col-xs-2 rating">
-                <div class="likes" ng-click="players[2].plusOne()">+</div>
-                <div class="dislikes" ng-click="players[2].minusOne()">-</div>
+            <div ng-repeat="player in players">
+              <div class="rounds col-xs-12">
+                <div class="round col-xs-2">
+                  <input type='text' ng-model="playerService.p[$index]"/>
+                </div>
+                <div ng-class="player.roundScore(0)" class="round round-{{player.score1}} col-xs-2">
+                  {{player.score1}}
+                </div>
+                <div ng-class="player.roundScore(1)" class="round round-{{player.score2}} col-xs-2">
+                  {{player.score2}}
+                </div>
+                <div ng-class="player.roundScore(2)" class="round round-{{player.score3}} col-xs-2">
+                  {{player.score3}}
+                </div>
+                <div ng-show="tie" ng-class="player.roundScore(3)" class="round round-{{player.score4}} tie col-xs-1">
+                  {{player.score4}}
+                </div>
+                <div ng-show="head" ng-class="player.roundScore(4)" class="round head round-{{player.score5}} col-xs-1">
+                  {{player.score5}}
+                </div>
+                <div class="col-xs-2 rating">
+                  <div class="likes" ng-click="player.plusOne()">+</div>
+                  <div class="dislikes" ng-click="player.minusOne()">-</div>
+                </div>
               </div>
             </div>
             <button class='btn' ng-click="add()">Save</button>
