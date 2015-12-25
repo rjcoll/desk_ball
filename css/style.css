@@ -55,6 +55,14 @@ body {
     background-attachment: fixed;
 }
 
+table a, table a:hover, table a:active, table a:focus {
+  color:white;
+  text-decoration: none;
+}
+
+table td {
+  width:12.5%
+}
 .games {
   margin-bottom: 20px;
 }
