@@ -23,6 +23,22 @@ Array.prototype.equals = function (array, strict) {
     return true;
 }
 
+function rank(name) {
+  this.name = name;
+  this.wins = 0;
+  this.middle = 0;
+  this.losses = 0;
+  this.games = 0;
+  this.finals = function() {
+    return (this.wins + this.middle);
+  };
+  this.win_perc_all = function() {
+    return Math.floor(this.wins/this.games *100)
+  }
+  this.win_perc_finals = function() {
+    return Math.floor(this.wins/(this.wins + this.middle) *100)
+  }
+}
 
     var calcScores = function(data, players) {
 
@@ -98,6 +114,50 @@ Array.prototype.equals = function (array, strict) {
 
 
 
+    }
+
+    var scoreBoard = function(data) {
+      unique_players = []
+
+      data.forEach(function(game, index) {
+        unique_players.push(game.game.winner, game.game.middle, game.game.loser);
+      })
+
+      unique_players = unique_players.filter(function(item, i, array) {
+        return array.indexOf(item) === i
+      })
+
+      ranking = []
+
+
+      for (var i = 0; i<unique_players.length;i++) {
+        ranking[i] = new rank(unique_players[i])
+      }
+
+      data
+        .forEach(function(d) {
+          index = ranking
+            .map(function(d) { return d.name})
+            .indexOf(d.game.winner)
+          ranking[index].wins += 1;
+          ranking[index].games += 1;
+
+          index = ranking
+            .map(function(d) { return d.name})
+            .indexOf(d.game.middle)
+          ranking[index].middle += 1;
+          ranking[index].games += 1;
+
+          index = ranking
+            .map(function(d) { return d.name})
+            .indexOf(d.game.loser)
+          ranking[index].losses += 1;
+          ranking[index].games += 1;
+        })
+
+      console.log(ranking)
+
+      return ranking
     }
 
 
