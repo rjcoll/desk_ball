@@ -5,32 +5,17 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
   /* Define the players */
   $scope.playerService = playerService;
 
-  $scope.players = [
-    {
-      name: null
-    },
-    {
-      name: null
-    },
-    {
-      name: null
-    }
-  ];
-
-  $scope.players[0].name = playerService.value0
-  $scope.players[1].name = playerService.value1
-  $scope.players[2].name = playerService.value2
+  $scope.players =[{},{},{}]
 
   //create the empty schema for the game
-  $scope.players.forEach(function(player) {
+  $scope.players.forEach(function(player, index) {
+    player.name = playerService.p[index]
     player.score1 = 0;
     player.score2 = 0;
     player.score3 = 0;
     player.score4 = 0;
     player.score5 = 0;
     player.score = 0;
-    player.tie = false;
-    player.head = false;
     player.updateScore = function() {
       var array = [this.score1, this.score2, this.score3, this.score4, this.score5];
       var count = 0;
@@ -92,30 +77,37 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
   //sort out where we are in the game
   game = function() {
 
-    $scope.players[0].name = playerService.value0
-    $scope.players[1].name = playerService.value1
-    $scope.players[2].name = playerService.value2
-
     //is it a tie?
-    if ($scope.players[0].score === 1 && $scope.players[1].score === 1 && $scope.players[2].score === 1) {
-      $scope.stage = 3;
-      for (var i = 0; i < 3; i++) {
-        $scope.players[i].tie = true;
-      }
-      return $scope.tie = true;
+    if ($scope.players[0].score === 1 &&
+        $scope.players[1].score === 1 &&
+        $scope.players[2].score === 1
+      ) {
+        $scope.stage = 3;
+        return $scope.tie = true;
     }
 
     //is it the final?
-    if (($scope.players[0].score > 1 || $scope.players[1].score > 1 || $scope.players[2].score > 1) && ($scope.players[0].score + $scope.players[1].score + $scope.players[2].score) >=3 && !$scope.head ) {
-      $scope.stage = 4;
-      for (var i = 0; i < 3; i++) {
-        $scope.players[i].head = true;
-      }
-      return $scope.head = true;
-      }
+    if (
+        ($scope.players[0].score > 1 ||
+        $scope.players[1].score > 1 ||
+        $scope.players[2].score > 1)
+        &&
+        ($scope.players[0].score +
+          $scope.players[1].score +
+          $scope.players[2].score) >=3 &&
+          !$scope.head
+      ) {
+        $scope.stage = 4;
+        return $scope.head = true;
+    }
 
     //is it it the end?
     if ($scope.head && ($scope.players[0].score5 > 2 || $scope.players[1].score5 > 2 || $scope.players[2].score5 > 2) ) {
+      //set the end of the game
+      $scope.end = true;
+    }
+
+    if ($scope.end) {
 
       //count the players scores for the first 3 rounds (and the tiebreaker)//
       $scope.players.forEach(function(player) {
@@ -146,19 +138,16 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
         }
 
       })
-
-      //set the end of the game
-      $scope.end = true;
     }
   }
 
-  addGame = function(end, players) {
-    if (!end) return alert('Not the end of the game!')
+  addGame = function(players) {
 
     var scores = [];
 
-    var names = [playerService.value0,playerService.value1,playerService.value2]
+        var names = playerService.p
 
+    /*Create Schema for each player*/
     players.forEach(function(player, index) {
       var score = {
         name: names[index],
@@ -192,12 +181,13 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
 
   $scope.add = function() {
 
-    players = [playerService.value0,playerService.value1,playerService.value2]
+    if (!$scope.end) return alert('Not the end of the game!')
 
-    var save = addGame($scope.end, $scope.players)
+    var save = addGame($scope.players)
 
     save = Person.$add(save);
 
+    /*reset the player scope if the save is successful*/
      if(save) {
 
       $scope.players.forEach(function(player) {
