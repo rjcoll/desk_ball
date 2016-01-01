@@ -1,49 +1,61 @@
 app.controller('gameController', ['$scope', 'Person', 'playerService', function($scope, Person, playerService) {
 
-  /* === PLAYERS === */
-
-  /* Define the players */
-  $scope.playerService = playerService;
-
-  $scope.players =[{},{},{}]
-
-  //create the empty schema for the game
-  $scope.players.forEach(function(player, index) {
-    player.name = playerService.p[index]
-    player.score1 = 0;
-    player.score2 = 0;
-    player.score3 = 0;
-    player.score4 = 0;
-    player.score5 = 0;
-    player.score = 0;
-    player.updateScore = function() {
+  var Player = function(name) {
+    this.name = name;
+    this.score1 = 0;
+    this.score2 = 0;
+    this.score3 = 0;
+    this.score4 = 0;
+    this.score5 = 0;
+    this.score = 0;
+    this.place = '';
+    this.updateScore = function() {
       var array = [this.score1, this.score2, this.score3, this.score4, this.score5];
       var count = 0;
       for(var i = 0; i < array.length; i++) {
         if (array[i] === 3) count++
       }
-      player.score = count;
+      this.score = count;
       game();
     };
 
-    player.plusOne = function() {
+    this.plusOne = function() {
       var stage = "score" + ($scope.stage + 1);
       if (this[stage] < 3) this[stage] += 1;
-      if (this[stage] >= 3 && $scope.stage < 4) $scope.nextStage();
+      if (this[stage] >= 3 && this[stage] < 4) $scope.nextStage();
       this.updateScore();
     };
 
-    player.minusOne = function() {
+    this.minusOne = function() {
       var stage = "score" + ($scope.stage + 1);
       if (this[stage] > 0) this[stage] -= 1;
       this.updateScore();
         //else if ($scope.stage > 1)  $scope.stage -= 1;
     };
 
-    player.roundScore = function(round) {
+    this.roundScore = function(round) {
       if (round === $scope.stage) return 'cur-round'
     }
-  });
+
+    this.reset = function() {
+      this.score1 = 0;
+      this.score2 = 0;
+      this.score3 = 0;
+      this.score4 = 0;
+      this.score5 = 0;
+      this.score = 0;
+      this.place = '';
+    }
+  }
+
+  $scope.players = [new Player('Rob'), new Player('Will'), new Player('Ben')]
+
+  //Update the players service to match the inputs
+  //TODO - add in a better selection mechanism for the graphs
+
+  $scope.blur = function() {
+    playerService.p = $scope.players.map(function(d) {return d.name})
+  }
 
   /* === ROUNDS === */
 
@@ -145,12 +157,10 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
 
     var scores = [];
 
-        var names = playerService.p
-
     /*Create Schema for each player*/
     players.forEach(function(player, index) {
       var score = {
-        name: names[index],
+        name: player.name,
         score: player.score,
         score1: player.score1,
         score2: player.score2,
@@ -191,15 +201,7 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
      if(save) {
 
       $scope.players.forEach(function(player) {
-        player.score1 = 0;
-        player.score2 = 0;
-        player.score3 = 0;
-        player.score4 = 0;
-        player.score5 = 0;
-        player.score = 0;
-        player.tie = false;
-        player.head = false;
-        player.place = '';
+        player.reset()
       })
 
       $scope.tie = false;

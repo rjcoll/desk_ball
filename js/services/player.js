@@ -1,3 +1,3 @@
 app.service('playerService', function() {
-  this.p= ['Will', 'Ben', 'Rob']
+  this.p = ['Will', 'Ben', 'Rob']
 });

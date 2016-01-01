@@ -152,7 +152,7 @@
             <div ng-repeat="player in players">
               <div class="rounds col-xs-12">
                 <div class="round col-xs-2">
-                  <input type='text' ng-model="playerService.p[$index]"/>
+                  <input class="name" ng-blur="blur()" type='text' ng-model="player.name"/>
                 </div>
                 <div ng-class="player.roundScore(0)" class="round round-{{player.score1}} col-xs-2">
                   {{player.score1}}
