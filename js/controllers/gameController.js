@@ -1,42 +1,10 @@
 app.controller('gameController', ['$scope', 'Person', 'playerService', function($scope, Person, playerService) {
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD:js/controllers/gameController.js
   /* === PLAYERS === */
 
   /* Define the players */
   $scope.playerService = playerService;
 
-  $scope.players = [
-    {
-      name: null
-    },
-    {
-      name: null
-    },
-    {
-      name: null
-    }
-  ];
-
-  $scope.players[0].name = playerService.value0
-  $scope.players[1].name = playerService.value1
-  $scope.players[2].name = playerService.value2
-
-  //create the empty schema for the game
-  $scope.players.forEach(function(player) {
-    player.score1 = 0;
-    player.score2 = 0;
-    player.score3 = 0;
-    player.score4 = 0;
-    player.score5 = 0;
-    player.score = 0;
-    player.tie = false;
-    player.head = false;
-    player.updateScore = function() {
-=======
->>>>>>> Stashed changes
   var Player = function(name) {
     this.name = name;
     this.score1 = 0;
@@ -47,10 +15,6 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
     this.score = 0;
     this.place = '';
     this.updateScore = function() {
-<<<<<<< Updated upstream
-=======
->>>>>>> users:js/controllers/gameController.js
->>>>>>> Stashed changes
       var array = [this.score1, this.score2, this.score3, this.score4, this.score5];
       var count = 0;
       for(var i = 0; i < array.length; i++) {
@@ -67,15 +31,8 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
       this.updateScore();
     };
 
-<<<<<<< Updated upstream
+
     this.minusOne = function() {
-=======
-<<<<<<< HEAD:js/controllers/gameController.js
-    player.minusOne = function() {
-=======
-    this.minusOne = function() {
->>>>>>> users:js/controllers/gameController.js
->>>>>>> Stashed changes
       var stage = "score" + ($scope.stage + 1);
       if (this[stage] > 0) this[stage] -= 1;
       this.updateScore();
