@@ -157,7 +157,6 @@ app.controller('gameController', ['$scope', 'Person', 'playerService', function(
 
     var scores = [];
 
-    /*Create Schema for each player*/
     players.forEach(function(player, index) {
       var score = {
         name: player.name,

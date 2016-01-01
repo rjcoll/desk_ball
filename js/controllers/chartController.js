@@ -57,14 +57,13 @@ app.controller('chartController', ['$scope', 'Person', 'playerService', function
 
   ]
 
-
   $scope.update = function() {
-    players = playerService.p
-    updateCharts(svg, charts, Person, players)
+    var players = playerService.p;
+    updateCharts(svg, charts, Person, players);
   }
 
-  $scope.sortType     = 'name'; // set the default sort type
-  $scope.sortReverse  = false;  // set the default sort order
+  $scope.sortType = 'name'; // set the default sort type
+  $scope.sortReverse = false;  // set the default sort order
 
   players = playerService.p
 
@@ -74,6 +73,7 @@ app.controller('chartController', ['$scope', 'Person', 'playerService', function
       $scope.ranking = scoreBoard(Person);
 
 
+
       //after charts are drawn, define watch event
       Person.$watch(function(event) {
         players = playerService.p
@@ -81,11 +81,6 @@ app.controller('chartController', ['$scope', 'Person', 'playerService', function
         //update charts when the database changes
         $scope.ranking = scoreBoard(Person);
         }
-
-
       );
     });
-
-      //define watch event on players too
-
   }]);

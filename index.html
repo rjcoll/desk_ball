@@ -149,6 +149,7 @@
               </div>
             </div>
 
+<<<<<<< HEAD
             <div ng-repeat="player in players">
               <div class="rounds col-xs-12">
                 <div class="round col-xs-2">
@@ -173,6 +174,82 @@
                   <div class="likes" ng-click="player.plusOne()">+</div>
                   <div class="dislikes" ng-click="player.minusOne()">-</div>
                 </div>
+=======
+
+            <div class="rounds col-xs-12">
+              <div class="round col-xs-2">
+                <input type='text' ng-blur="names()" ng-model="playerService.value0"/>
+              </div>
+              <div ng-class="players[0].roundScore(0)" class="round round-{{players[0].score1}} col-xs-2">
+                {{players[0].score1}}
+              </div>
+              <div ng-class="players[0].roundScore(1)" class="round round-{{players[0].score2}} col-xs-2">
+                {{players[0].score2}}
+              </div>
+              <div ng-class="players[0].roundScore(2)" class="round round-{{players[0].score3}} col-xs-2">
+                {{players[0].score3}}
+              </div>
+              <div ng-show="players[0].tie" ng-class="players[0].roundScore(3)" class="round round-{{players[0].score4}} tie col-xs-1">
+                {{players[0].score4}}
+              </div>
+              <div ng-show="players[0].head" ng-class="players[0].roundScore(4)" class="round head round-{{players[0].score5}} col-xs-1">
+                {{players[0].score5}}
+              </div>
+              <div class="col-xs-2 rating">
+                <div class="likes" ng-click="players[0].plusOne()">+</div>
+                <div class="dislikes" ng-click="players[0].minusOne()">-</div>
+              </div>
+            </div>
+
+
+            <div class="rounds col-xs-12">
+              <div class="round col-xs-2">
+                <input type='text' ng-blur="names()" ng-model="playerService.value1"/>
+              </div>
+              <div ng-class="players[1].roundScore(0)" class="round round-{{players[1].score1}} col-xs-2">
+                {{players[1].score1}}
+              </div>
+              <div ng-class="players[1].roundScore(1)" class="round round-{{players[1].score2}} col-xs-2">
+                {{players[1].score2}}
+              </div>
+              <div ng-class="players[1].roundScore(2)" class="round round-{{players[1].score3}} col-xs-2">
+                {{players[1].score3}}
+              </div>
+              <div ng-show="players[1].tie" ng-class="players[1].roundScore(3)" class="round round-{{players[1].score4}} tie col-xs-1">
+                {{players[1].score4}}
+              </div>
+              <div ng-show="players[1].head" ng-class="players[1].roundScore(4)" class="round head round-{{players[1].score5}} col-xs-1">
+                {{players[1].score5}}
+              </div>
+              <div class="col-xs-2 rating">
+                <div class="likes" ng-click="players[1].plusOne()">+</div>
+                <div class="dislikes" ng-click="players[1].minusOne()">-</div>
+              </div>
+            </div>
+
+            <div class="rounds col-xs-12">
+              <div class="round col-xs-2">
+                <input type='text' ng-blur="names()" ng-model="playerService.value2"/>
+              </div>
+              <div ng-class="players[2].roundScore(0)" class="round round-{{players[2].score1}} col-xs-2">
+                {{players[2].score1}}
+              </div>
+              <div ng-class="players[2].roundScore(1)" class="round round-{{players[2].score2}} col-xs-2">
+                {{players[2].score2}}
+              </div>
+              <div ng-class="players[2].roundScore(2)" class="round round-{{players[2].score3}} col-xs-2">
+                {{players[2].score3}}
+              </div>
+              <div ng-show="players[2].tie" ng-class="players[2].roundScore(3)" class="round round-{{players[2].score4}} tie col-xs-1">
+                {{players[2].score4}}
+              </div>
+              <div ng-show="players[2].head" ng-class="players[2].roundScore(4)" class="round head round-{{players[2].score5}} col-xs-1">
+                {{players[2].score5}}
+              </div>
+              <div class="col-xs-2 rating">
+                <div class="likes" ng-click="players[2].plusOne()">+</div>
+                <div class="dislikes" ng-click="players[2].minusOne()">-</div>
+>>>>>>> master
               </div>
             </div>
             <button class='btn' ng-click="add()">Save</button>

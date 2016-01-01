@@ -160,7 +160,6 @@ function rank(name) {
       return ranking
     }
 
-
     var updateCharts = function(svg,charts, Person,players) {
       var scores = calcScores(Person, players);
 
